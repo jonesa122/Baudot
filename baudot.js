@@ -1,3 +1,6 @@
+function teehee(){
+    alert("yea the button works");
+}
 function crypt(message, key){
     var result = [];
     for(let i = 0 ; i < message.length; i++){
