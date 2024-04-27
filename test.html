@@ -2,11 +2,35 @@
     <script type="text/javascript" src="baudot.js"></script> 
 </head>
 <body>
-    <label for="plaintextInput">Plaintext Input</label>
+    <fieldset>
+        <legend>Select a type of input:
+        </legend>
+        <input type="radio" id="englishPlaintextInput" name="input" value = "englishPlaintextInput"/>
+        <label for="englishPlaintextInput">English Plaintext</label>
+        <input type = "radio" id="binaryPlaintextInput" name="input" value="binaryPlaintextInput"/>
+        <label for="binaryPlaintextInput">Binary Plaintext</label>
+        <input type="radio" id="englishCiphertextInput" name="input" value="englishCiphertextInput"/>
+        <label for="englishCiphertextInput">English Ciphertext</label>
+        <input type = "radio" id="binaryCiphertextInput" name="input" value = "binaryCiphertextInput"/>
+        <label for="binaryCiphertextInput">Binary Ciphertext</label>
+    </fieldset>
+    <fieldset>
+        <legend>Select a type of output:
+        </legend>
+        <input type="radio" id="englishPlaintextOutput" name="output" value = "englishPlaintextOutput"/>
+        <label for="englishPlaintextOutput">English Plaintext</label>
+        <input type = "radio" id="binaryPlaintextOutput" name="output" value="binaryPlaintextOutput"/>
+        <label for="binaryPlaintextOutput">Binary Plaintext</label>
+        <input type="radio" id="englishCiphertextOutput" name="output" value="englishCiphertextOutput"/>
+        <label for="englishCiphertextOutput">English Ciphertext</label>
+        <input type = "radio" id="binaryCiphertextOutput" name="output" value = "binaryCiphertextOutput"/>
+        <label for="binaryCiphertextOutput">Binary Ciphertext</label>
+    </fieldset>
+    <label for="plaintextInput">Input</label>
     <textarea id = "plaintextInput"></textarea>
-    <label for="keyInput">Key Input</label>
+    <label for="keyInput">Key</label>
     <textarea id = "keyInput"></textarea>
-    <label for="binary">Ciphertext</label>
+    <label for="binary">Output</label>
     <textarea id = "binary"></textarea>
-    <input type= "button" value = "CIPHER!" onclick="document.getElementById('binary').innerHTML = printBinary(crypt(encode(document.getElementById('plaintextInput').value), encode(document.getElementById('keyInput').value)))">
+    <input type= "button" value = "CIPHER!" onclick="document.getElementById('binary').innerHTML = determineInputOutput(document.getElementsByName('input'), document.getElementsByName('output'), document.getElementById('plaintextInput').value, document.getElementById('keyInput').value)">
 </body>
