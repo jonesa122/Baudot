@@ -2,9 +2,7 @@
     <script type="text/javascript" src="baudot.js"></script> 
 </head>
 <body>
-    <textarea id = "binaryInput"></textarea>
+    <textarea id = "plaintextInput"></textarea>
     <textarea id = "binary"></textarea>
-   <input type = "button" value = "Print binary" onclick = "document.getElementById('binary').innerHTML = printBinary([1, 2, 7])">
-
-   <button onclick="teehee()"> wagoo </button>
+    <input type= "button" value = "Get input" onclick="document.getElementById('binary').innerHTML = printBinary(encode(document.getElementById('plaintextInput').value))">
 </body>
