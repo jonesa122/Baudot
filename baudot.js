@@ -2,8 +2,8 @@ function crypt(message, key){
     var result = [];
     for(let i = 0 ; i < message.length; i++){
         let keyIndex = i % key.length;
-        let messageNumber = message.get(i);
-        let keyNumber = key.get(keyIndex);
+        let messageNumber = message[i];
+        let keyNumber = key[keyIndex];
         let tempResult = messageNumber ^ keyNumber;
         result.push(tempResult);
     }

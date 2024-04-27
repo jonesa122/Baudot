@@ -2,7 +2,11 @@
     <script type="text/javascript" src="baudot.js"></script> 
 </head>
 <body>
+    <label for="plaintextInput">Plaintext Input</label>
     <textarea id = "plaintextInput"></textarea>
+    <label for="keyInput">Key Input</label>
+    <textarea id = "keyInput"></textarea>
+    <label for="binary">Ciphertext</label>
     <textarea id = "binary"></textarea>
-    <input type= "button" value = "Get input" onclick="document.getElementById('binary').innerHTML = printBinary(encode(document.getElementById('plaintextInput').value))">
+    <input type= "button" value = "CIPHER!" onclick="document.getElementById('binary').innerHTML = printBinary(crypt(encode(document.getElementById('plaintextInput').value), encode(document.getElementById('keyInput').value)))">
 </body>
