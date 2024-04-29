@@ -1,3 +1,4 @@
+
 function crypt(message, key){
     var result = [];
     for(let i = 0 ; i < message.length; i++){
@@ -107,13 +108,13 @@ function encodeLetters(encoded, message, index){
     for(i = index; i < message.length; i++){
         var charInMessage = message.substring(i, i+1);
         console.log(charInMessage);
-        var nextSix = "";
-        if(message.length > i+5){
-            nextSix = message.substring(i, i+6);
-        }
         var match = false;
        
         for(let j = 0; j < letters.length && !match; j++){
+            if(charInMessage === " "){
+                message = message.replace(charInMessage, "");
+            }
+            
             if(charInMessage === (letters[j])){
                 encoded.push(binary[j]);
                 match=true;
@@ -126,52 +127,7 @@ function encodeLetters(encoded, message, index){
     return i;
 }
 
-function encodeFigures(encoded, message, index){
-    const figures = ["-","?",":","who are you?","3","%","@","$","8","ring bell","(",")",".",",","9","0","1","4","'","5","7","=","2","/","6","+","shiftL"];
-    const finary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17,  31];
-    var i;
-    for(i = index; i<message.length; i++){
-        charInMessage = message.substring(i, i+1);
-        var nextSix = "";
-        var nextNine ="";
-        var nextTwelve = "";
-        if(message.length > i+5){
-            nextSix = message.substring(i, i+6);
-        }
-        if(message.length > i + 8){
-            nextNine = message.substring(i, i+9);
-        }
-        if(message.length > i + 11){
-            nextTwelve = message.substring(i, i+12);
-        }
-        var match = false;
-        if(nextSix === (figures[26])){
-            match = true;
-            encoded.push(finary[26]);
-            i = encodeLetters(encoded, message, i+6);
-        }
-        if(nextNine === (figures[9])){
-            match = true;
-            encoded.push(finary[9]);
-            i = encodeFigures(encoded, message, i + 9);
-        }
-        if(nextTwelve === (figures[3])){
-            match = true;
-            encoded.push(finary[3]);
-            i = encodeFigures(encoded, message, i+12);
-        }
-        for(let j = 0; j < figures.length && !match; j++){
-            if(charInMessage === (figures[j])){
-                encoded.push(finary[j]);
-                match = true;
-            }
-        }
-        if(!match){
-            i = encodeSpecial(encoded, message, i);
-        }
-    }
-    return i;
-}
+
 
 function encodeSpecial(encoded, message, index){
     
@@ -180,13 +136,11 @@ function encodeSpecial(encoded, message, index){
     const special = [0, 4, 2, 8];
     var isLetters = false;
     var isFigures = false;
-    var nextSix = "";
+    
     var i;
     for (i=index; i<message.length && !isLetters && !isFigures; i++){
         var charInMessage = message.substring(i, i+1);
-        if(message.length > i+6){
-            nextSix = message.substring(i, i+6);
-        }
+         
         var match = false;
         for(let j = 0; j< specialCharacter.length && !match; j++){
             if(charInMessage === (specialCharacter[j])){
