@@ -13,11 +13,9 @@ function crypt(message, key){
     
 function decode(encoded){
     var decoded = [];
-    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","shiftF"];
-    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27]; 
-    const figures = ["-","?",":","who are you?","3","%","@","$","8","ring bell","(",")",".",",","9","0","1","4","'","5","7","=","2","/","6","+","shiftL"];
-    const finary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17,  31];
-    const specialCharacter = ["/", " ", "\n", "line feed"];
+    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","5","8"];
+    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27, 31]; 
+    const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
 
     var isLetter = true;
@@ -42,17 +40,7 @@ function decode(encoded){
                         }
                     }
                 }
-            } else{
-                for(let j=0; j < finary.length && !found; j++){
-                    if(encodedNumber ==finary[j]){
-                        found = true;
-                        decoded.push(figures[j]);
-                        if(j == 26){
-                            isLetter = true;
-                        }
-                    }
-                }
-            }
+            } 
         }
     }
     return decoded;
@@ -60,13 +48,10 @@ function decode(encoded){
 
 function encode(message){
     var encoded = [];
-    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"
-        ,"r","s","t","u","v","w","x","y","z","shiftF"];
-    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27]; 
-    const figures = ["-","?",":","who are you?","3","%","@","$","8","ring bell"
-        ,"(",")",".",",","9","0","1","4","'","5","7","=","2","/","6","+","shiftL"];
-    const finary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17,  31];
-    const specialCharacter = ["/", " ", "\n", "line feed"];
+   
+    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","5","8"];
+    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27, 31]; 
+    const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
 
     var firstCharacter="";
@@ -88,31 +73,22 @@ function encode(message){
     }
 
     var isLetters = false;
-    var isFigures = false;
 
     if(firstSix === (letters[26])){
         isLetters = true;
     }
-    if(firstSix === (figures[26])||firstNine === (figures[9])||firstTwelve === (figures[3])){
-        isFigures = true;
-    }
+   
 
-    for(i=0; i<letters.length && !isLetters && !isFigures; i++){
+    for(i=0; i<letters.length && !isLetters; i++){
         if(firstCharacter === (letters[i])){
             isLetters=true;
         }
     }
 
-    for(i=0; i<figures.length && !isLetters && !isFigures; i++){
-        if(firstCharacter === (figures[i])){
-            isFigures=true;
-        }
-    }
+  
     
     if(isLetters){
         encodeLetters(encoded, message, 0);
-    } else if(isFigures){
-        encodeFigures(encoded, message, 0);
     } else{
         encodeSpecial(encoded, message, 0);
     }
@@ -123,8 +99,10 @@ function encode(message){
 }
 
 function encodeLetters(encoded, message, index){
-    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","shiftF"];
-    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27]; 
+    
+    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","5","8"];
+    const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27, 31]; 
+   
     var i;
     for(i = index; i < message.length; i++){
         var charInMessage = message.substring(i, i+1);
@@ -134,12 +112,7 @@ function encodeLetters(encoded, message, index){
             nextSix = message.substring(i, i+6);
         }
         var match = false;
-        if(nextSix === (letters[26])){
-            console.log(nextSix);
-            match = true;
-            encoded.push(binary[26]);
-            i = encodeFigures(encoded, message, i+6);
-        }
+       
         for(let j = 0; j < letters.length && !match; j++){
             if(charInMessage === (letters[j])){
                 encoded.push(binary[j]);
@@ -201,9 +174,10 @@ function encodeFigures(encoded, message, index){
 }
 
 function encodeSpecial(encoded, message, index){
-    const specialCharacter = ["/", " ", "\n", "line feed"];
+    
+    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","5","8"];
+    const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
-    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","shiftF"];
     var isLetters = false;
     var isFigures = false;
     var nextSix = "";
