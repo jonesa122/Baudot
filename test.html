@@ -1,7 +1,44 @@
 <head>
+    <title>Baudot Encode/Decode</title>
     <script type="text/javascript" src="baudot.js"></script> 
+    <style>
+        body {
+        margin: 0 5%;
+        background-color: #dbc286;
+        font-family: Arial, "Times New Roman", Times, serif;
+        }
+        ul{font-size: 2em; color: #000000;}
+        h1, h2, h3 {font-family:"Times New Roman", Times, serif;
+        color: #000000;}
+        h1 {
+        font-size: 1.5em; text-align: left;
+        }
+        h2 {display: inline;
+        
+        font-size: 1.1em;
+        }
+        h3 {font-size: 1em; text-align: center;}
+        li:not(:last-child) {
+        margin-bottom: 10px;
+        }
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: 100px;
+          width: 35%;
+        }
+        
+        </style>
 </head>
 <body>
+    <br>
+    <h1>Baudot Encode/Decode</h1>
+    
+    
+    <p>This software can encode or decode text using the Baudot tables provided below. Binary and English input/output are supported.</p>
+    <hr>
+    <br>
+
     <fieldset>
         <legend>Select a type of input:
         </legend>
@@ -14,6 +51,7 @@
         <input type = "radio" id="binaryCiphertextInput" name="input" value = "binaryCiphertextInput"/>
         <label for="binaryCiphertextInput">Binary Ciphertext</label>
     </fieldset>
+    <br>
     <fieldset>
         <legend>Select a type of output:
         </legend>
@@ -26,11 +64,33 @@
         <input type = "radio" id="binaryCiphertextOutput" name="output" value = "binaryCiphertextOutput"/>
         <label for="binaryCiphertextOutput">Binary Ciphertext</label>
     </fieldset>
-    <label for="plaintextInput">Input</label>
-    <textarea id = "plaintextInput"></textarea>
-    <label for="keyInput">Key</label>
-    <textarea id = "keyInput"></textarea>
-    <label for="binary">Output</label>
-    <textarea id = "binary"></textarea>
+    <br>
+    <label for="plaintextInput">Input:</label>
+    <textarea id = "plaintextInput" cols="50" rows="6"></textarea>
+    <label for="keyInput"> |  Key:</label>
+    <textarea id = "keyInput" cols="50" rows="6"></textarea>
+    <label for="binary"> |  Output:</label>
+    <textarea id = "binary" cols="50" rows="6"></textarea>
     <input type= "button" value = "CIPHER!" onclick="document.getElementById('binary').innerHTML = determineInputOutput(document.getElementsByName('input'), document.getElementsByName('output'), document.getElementById('plaintextInput').value, document.getElementById('keyInput').value)">
+    <hr>
+    <br>
+    <h2>Some Tables</h2><br>
+    <pre>
+    <img src="BaudotTable.png" alt="Baudot Addition Table"><img>    <img src="BaudotEncoding.png" alt="Baudot Encoding"><img>
+    </pre>
+    <p>Corrections to the above table (row + column)</p>
+    
+    <pre>
+    K + 5 = H               X + R = Q
+    N + 5 = Q               Y + 4 = Q
+    N + 9 = 3               Y + 9 = Z
+    R + 3 = 4               Z + B = 3
+    R + 4 = 3               8 + T = K
+    S + 3 = F               5 + K = H
+    T + 8 = K               5 + N = Q
+    V + 5 = S               5 + V = S
+    V + 3 = P               3 + S = F 
+    4 + Y = Q               3 + V = P 
+    9 + Y = Z
+    </pre>
 </body>
