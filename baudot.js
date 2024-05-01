@@ -19,7 +19,6 @@ function decode(encoded){
     const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
 
-    var isLetter = true;
     for(let i = 0; i < encoded.length; i++){
         var found = false;
         var encodedNumber = encoded[i];
@@ -30,18 +29,12 @@ function decode(encoded){
             }
         }
         if(!found){
-            if(isLetter){
-                for(let j=0; j < binary.length && !found; j++){
-                    if(encodedNumber == binary[j]){
-                        console.log(letters[j]);
-                        found = true;
-                        decoded.push(letters[j]);
-                        if(j == 26){
-                            isLetter = false;
-                        }
-                    }
+            for(let j=0; j < binary.length && !found; j++){
+                if(encodedNumber == binary[j]){
+                    found = true;
+                    decoded.push(letters[j]);
                 }
-            } 
+            }
         }
     }
     return decoded;
@@ -54,31 +47,9 @@ function encode(message){
     const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27, 31]; 
     const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
-
-    var firstCharacter="";
-    var firstSix="";
-    var firstNine ="";
-    var firstTwelve ="";
-
-    if(message.length >= 1){
-        firstCharacter = message.substring(0,1);
-    }
-    if(message.length >= 6)
-        firstSix = message.substring(0,6);
-    
-    if(message.length >= 9){
-        firstNine = message.substring(0,9);
-    }
-    if(message.length>=12){
-        firstTwelve = message.substring(0,12);
-    }
+    var firstCharacter = message.substring(0,1);
 
     var isLetters = false;
-
-    if(firstSix === (letters[26])){
-        isLetters = true;
-    }
-   
 
     for(i=0; i<letters.length && !isLetters; i++){
         if(firstCharacter === (letters[i])){
@@ -86,15 +57,11 @@ function encode(message){
         }
     }
 
-  
-    
     if(isLetters){
         encodeLetters(encoded, message, 0);
     } else{
         encodeSpecial(encoded, message, 0);
     }
-
-    console.log(encoded);
 
     return encoded;
 }
@@ -107,14 +74,13 @@ function encodeLetters(encoded, message, index){
     var i;
     for(i = index; i < message.length; i++){
         var charInMessage = message.substring(i, i+1);
-        console.log(charInMessage);
         var match = false;
+
+        if(charInMessage === ' '){
+            match = true;
+        }
        
         for(let j = 0; j < letters.length && !match; j++){
-            if(charInMessage === " "){
-                message = message.replace(charInMessage, "");
-            }
-            
             if(charInMessage === (letters[j])){
                 encoded.push(binary[j]);
                 match=true;
@@ -135,10 +101,9 @@ function encodeSpecial(encoded, message, index){
     const specialCharacter = ["/", "9", "3", "4"];
     const special = [0, 4, 2, 8];
     var isLetters = false;
-    var isFigures = false;
     
     var i;
-    for (i=index; i<message.length && !isLetters && !isFigures; i++){
+    for (i=index; i<message.length && !isLetters; i++){
         var charInMessage = message.substring(i, i+1);
          
         var match = false;
@@ -156,9 +121,6 @@ function encodeSpecial(encoded, message, index){
             }
             if(isLetters){
                 i = encodeLetters(encoded, message, i);
-            } else {
-                isFigures = true;
-                i = encodeFigures(encoded, message, i);
             }
         }
     }
@@ -199,10 +161,6 @@ function determineInputOutput(inputIndicator, outputIndicator, input, key){
             outputSelected = outputIndicator[j].value;
         }
     }
-    console.log(inputSelected);
-    console.log(outputSelected);
-    console.log(input);
-    console.log(key);
 
     if(inputSelected === "englishPlaintextInput"){
         if(outputSelected === "englishPlaintextOutput"){
@@ -278,11 +236,11 @@ function determineInputOutput(inputIndicator, outputIndicator, input, key){
         }
 
     } else if(inputSelected === "englishCiphertextInput"){
-        if(outputSelected === "englishCiphertextOuput"){
+        if(outputSelected === "englishCiphertextOutput"){
             return input;
         } else if(outputSelected === "binaryCiphertextOutput"){
             return printBinary(encode(input));
-        } else if(outputSelected === "englishPlaintextOuput"){
+        } else if(outputSelected === "englishPlaintextOutput"){
             return printMessage(decode(crypt(encode(input), encode(key))));
         } else{
             return printBinary(crypt(encode(input), encode(key)));
