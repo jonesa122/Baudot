@@ -42,6 +42,7 @@ function decode(encoded){
 
 function encode(message){
     var encoded = [];
+    message = message.toLowerCase();
    
     const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","5","8"];
     const binary = [24, 19, 28, 18, 16, 22, 11, 5, 12, 26, 30, 9, 7, 6, 3, 13, 29, 10, 20, 1, 28, 15, 25, 23, 21, 17, 27, 31]; 
